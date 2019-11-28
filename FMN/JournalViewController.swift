@@ -8,39 +8,133 @@
 
 import UIKit
 
-class JournalViewController: UITableViewController {
+class JournalViewController: UITableViewController, AddJournalEntryViewControllerDelegate {
+    
+    let CellIdentifier = "Cell Identifier"
+    
+    var journalEntries = [JournalEntry]()
+    
+    //MARK: Initialization
+    required init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+        
+        //Load Journal Entries
+        loadJournalEntries()
+    }
+    
+    //MARK: Add Journal Entry View Controller Delegate Methods
+    func controller(controller: AddJournalEntryViewController, didSaveJournalEntryWithDate date: String, andEntry entry: String) {
+        
+        // Create Journal Entry
+        let journalEntry = JournalEntry(date: date, entry: entry)
+        
+        // Add Journal Entry to Journal Entries
+        journalEntries.append(journalEntry)
+        
+        // Add Row to Table View
+        tableView.insertRows(at: [(NSIndexPath(row: (journalEntries.count - 1), section: 0) as IndexPath)], with: UITableView.RowAnimation.none)
+    }
+    
+    //MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddJournalEntryViewController" {
+            if let navigationController = segue.destination as? UINavigationController, let addJournalEntryViewController = navigationController.viewControllers.first as? AddJournalEntryViewController {
+                addJournalEntryViewController.delegate = self
+            }
+        }
+    }
+    
+    
+    //MARK: Helper Methods
+    //https://stackoverflow.com/questions/53347426/ios-editor-bug-archiveddata-renamed
+    private func loadJournalEntries(){
+        let fullPath = getDocumentsDirectory().appendingPathComponent("journalEntries.plist")
+//        if let filePath = pathForJournalEntries(), FileManager.default.fileExists(atPath: filePath) {
+//            if let archivedJournalEntries = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [JournalEntry] {
+//                journalEntries = archivedJournalEntries
+//            }
+//        }
+        if let nsData = NSData(contentsOf: fullPath) {
+            do {
+                let data = Data(referencing:nsData)
+
+                if let loadedJournalEntries = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Array<JournalEntry> {
+                    journalEntries = loadedJournalEntries
+                }
+            } catch {
+                print("Couldn't read file.")
+            }
+        }
+    }
+    
+    
+//    private func pathForJournalEntries() -> String? {
+//        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//        if let documents = paths.first, let documentsURL = NSURL(string: documents) {
+//            return documentsURL.appendingPathComponent("journalEntries.plist")?.path
+//        }
+//        return nil
+//    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    private func saveItems() {
+        let fullPath = getDocumentsDirectory().appendingPathComponent("journalEntries.plist")
+        do {
+            let filePath = try NSKeyedArchiver.archivedData(withRootObject: journalEntries, requiringSecureCoding: true)
+            try filePath.write(to:fullPath)
+        } catch {
+            print(error)
+        }
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Journal Entries"
+        
+        // Register Class
+        tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: CellIdentifier)
+        
+        // Create Add Button
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addJournalEntry(sender:)))
+        
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    @objc func addJournalEntry(sender: UIBarButtonItem) {
+        //print("Button was tapped. (;")
+        performSegue(withIdentifier: "AddJournalEntryViewController", sender: self)
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return journalEntries.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
 
-        // Configure the cell...
+        // Fetch Journal Entry
+        let journalEntry = journalEntries[indexPath.row]
+        
+        // Configure Table View Cell
+        cell.textLabel?.text = journalEntry.date
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
