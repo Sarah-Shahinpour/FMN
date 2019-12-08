@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA84D67C239C59F500D4FD7F /* DisplayJournalEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84D67B239C59F500D4FD7F /* DisplayJournalEntryViewController.swift */; };
 		FA939A38238CAC9600EA96F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA939A37238CAC9600EA96F1 /* AppDelegate.swift */; };
 		FA939A3A238CAC9600EA96F1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA939A39238CAC9600EA96F1 /* SceneDelegate.swift */; };
 		FA939A3C238CAC9600EA96F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA939A3B238CAC9600EA96F1 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA84D67B239C59F500D4FD7F /* DisplayJournalEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayJournalEntryViewController.swift; sourceTree = "<group>"; };
 		FA939A34238CAC9600EA96F1 /* FMN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FMN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA939A37238CAC9600EA96F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA939A39238CAC9600EA96F1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				FA939A39238CAC9600EA96F1 /* SceneDelegate.swift */,
 				FA939A3B238CAC9600EA96F1 /* ViewController.swift */,
 				FA939A3D238CAC9600EA96F1 /* Main.storyboard */,
+				FA84D67B239C59F500D4FD7F /* DisplayJournalEntryViewController.swift */,
 				FA939A6C238CC2A500EA96F1 /* JournalEntry.swift */,
 				FA939A6A238CC07A00EA96F1 /* JournalViewController.swift */,
 				FA939A70238F6EA300EA96F1 /* AddJournalEntryViewController.swift */,
@@ -275,6 +278,7 @@
 				FA939A3C238CAC9600EA96F1 /* ViewController.swift in Sources */,
 				FA939A42238CAC9600EA96F1 /* FMN.xcdatamodeld in Sources */,
 				FA939A38238CAC9600EA96F1 /* AppDelegate.swift in Sources */,
+				FA84D67C239C59F500D4FD7F /* DisplayJournalEntryViewController.swift in Sources */,
 				FA939A71238F6EA300EA96F1 /* AddJournalEntryViewController.swift in Sources */,
 				FA939A3A238CAC9600EA96F1 /* SceneDelegate.swift in Sources */,
 				FA939A6B238CC07A00EA96F1 /* JournalViewController.swift in Sources */,
